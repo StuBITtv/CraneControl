@@ -1,86 +1,66 @@
 #include "AccelStepper.h"
-#define HALFSTEP 8
-
-#define motor1Pin1  12
-#define motor1Pin2  11
-#define motor1Pin3  10
-#define motor1Pin4  9
 
 #define motor2Pin1  8
 #define motor2Pin2  7
 #define motor2Pin3  6
 #define motor2Pin4  5
 
-AccelStepper stepper1(HALFSTEP, motor1Pin1, motor1Pin3, motor1Pin2, motor1Pin4);
-AccelStepper stepper2(HALFSTEP, motor2Pin1, motor2Pin3, motor2Pin2, motor2Pin4);
+AccelStepper stepper[2];
 String commandStepper[2];
 
 void setup()
 {
+  stepper[0]= AccelStepper (8, 12, 10, 11, 9);
+  stepper[1]= AccelStepper (8, 8, 6, 7, 5);
+  for(int i=0; i<2; i++)
+  {
+    stepper[i].setMaxSpeed(1000.0);
+  }
   Serial.begin(9600);
-  stepper1.setMaxSpeed(1000.0);
-  stepper2.setMaxSpeed(1000.0);
 }
 
 void loop()
 {
-  if (Serial.available() > 0) //get data from Bluetooth if available
+  //if available, refresh command buffers
+  if (Serial.available() > 0)
   {
     String received = getBluetooth();
-    if (received[0] == '1') //check what motor is wanted
-    {
+    
+    if (received[0] == '1') 
+    { 
+      received.remove(0, 2);
       commandStepper[0] = received;
     }
     else if (received[0] == '2')
     {
+      received.remove(0,2);
       commandStepper[1] = received;
     }
   }
 
-  if (commandStepper[0] == "1:up") //check command buffer for first stepper
+  //Apply command buffer to steppers 
+  for(int i=0; i<2; i++)
   {
-    stepper1.setSpeed(1000.0);
-    stepper1.runSpeed();
-  }
-  else if (commandStepper[0] == "1:down")
-  {
-    stepper1.setSpeed(-1000.0);
-    stepper1.runSpeed();
-  }
-  else
-  {
-    stepper1.stop();
-  }
-
-  if (commandStepper[1] == "2:up") //check command buffer for second stepper
-  {
-    stepper2.setSpeed(1000.0);
-    stepper2.runSpeed();
-  }
-  else if (commandStepper[1] == "2:down")
-  {
-    stepper2.setSpeed(-1000.0);
-    stepper2.runSpeed();
-  }
-  else
-  {
-    stepper2.stop();
+    if (commandStepper[i] == "up")
+    {
+      stepper[i].setSpeed(1000.0);
+      stepper[i].runSpeed();
+    }
+    else if (commandStepper[i] == "down")
+    {
+      stepper[i].setSpeed(-1000.0);
+      stepper[i].runSpeed();
+    }
+    else
+    {
+      stepper[i].stop();
+    }
   }
 }
 
+// Returns a optimized string of the HC-06 Bluetooth device
 String getBluetooth()
 {
-  /* Returns a optimized string of the HC-06
-     Bluetooth device
-
-     YOU HAVE TO CHECK FIRST, IF THE SERIAL
-     BLUETOOTH DEVICE HC-06 IS AVAILABLE,
-     BEFOR CALLING THIS FUNCTION
-
-     Don't forget "Serial.begin(9600);"
-     in the "void setup()" :D
-  */
-
   String data;
 
   data = Serial.readString();
