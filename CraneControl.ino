@@ -7,20 +7,41 @@
 #define motorPin4  9
 
 AccelStepper stepper1(HALFSTEP, motorPin1, motorPin3, motorPin2, motorPin4);
+String received;
 
 void setup()
 {
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
   stepper1.setMaxSpeed(1000.0);
-  stepper1.setSpeed(1000);
+  
   stepper1.moveTo(0);
 }
 
 void loop()
 {
-  
+  if(Serial.available()>0)
+  {
+    received=getBluetooth();
+  }
+  if(received.equals("up"))
+  {
+    stepper1.setSpeed(1000);
+    stepper1.runSpeed();
+  }
+  else if(received.equals("down"))
+  {
+    stepper1.setSpeed(-1000);
+    stepper1.runSpeed();
+  }
+  else
+  {
+    stepper1.stop();
+  }
+  Serial.print(received);
 }
 
-String serialEvent()
+String getBluetooth()
 {
   /* Returns a optimized string of the HC-06 
    * Bluetooth device
