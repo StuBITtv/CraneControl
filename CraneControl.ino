@@ -14,8 +14,6 @@ void setup()
   Serial.begin(9600);
   pinMode(13, OUTPUT);
   stepper1.setMaxSpeed(1000.0);
-  
-  stepper1.moveTo(0);
 }
 
 void loop()
@@ -35,7 +33,7 @@ void loop()
     stepper1.setSpeed(-1000);
     stepper1.runSpeed();
   }
-  else
+  else if(received.equals("stop"))
   {
     stepper1.stop();
   }
