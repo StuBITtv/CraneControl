@@ -1,21 +1,19 @@
 #include "AccelStepper.h"
 
-#define motor2Pin1  8
-#define motor2Pin2  7
-#define motor2Pin3  6
-#define motor2Pin4  5
-
 AccelStepper stepper[2];
 String commandStepper[2];
 
 void setup()
 {
+  //setup steppers
   stepper[0]= AccelStepper (8, 12, 10, 11, 9);
   stepper[1]= AccelStepper (8, 8, 6, 7, 5);
   for(int i=0; i<2; i++)
   {
     stepper[i].setMaxSpeed(1000.0);
   }
+
+  //setup Bluetooth
   Serial.begin(9600);
 }
 
