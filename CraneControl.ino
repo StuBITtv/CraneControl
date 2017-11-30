@@ -23,6 +23,7 @@ void loop()
   if(Serial.available()>0)
   {
     received=getBluetooth();
+    Serial.print(received);
   }
   if(received.equals("up"))
   {
@@ -38,7 +39,7 @@ void loop()
   {
     stepper1.stop();
   }
-  Serial.print(received);
+  
 }
 
 String getBluetooth()
