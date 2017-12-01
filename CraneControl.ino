@@ -23,7 +23,6 @@ void loop()
   if (Serial.available() > 0)
   {
     String received = Serial.readString();
-    Serial.print(received);
     
     if (received[0] == '1') 
     { 
