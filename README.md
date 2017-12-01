@@ -2,8 +2,8 @@
 Arduino Bluetooth model crane control
 
 # What you need
-- of cause, an Arduino
-- a Hc-06 Bluetooth modul
+- an Arduino compatible board
+- a HC-06 Bluetooth modul
 - 2x 28BYJ-48 stepper motors
 - 2x ULN2003 motor drivers
 - and of cours, an Android smartphone and a computer
@@ -18,5 +18,7 @@ Arduino Bluetooth model crane control
 - Copy the "CraneControl.apk" to your smartphone
 - Go to the security settings of your smartphone and allow unknown sources
 - Open the APK and the installation starts
+
+In case you can't hit the install button - make sure that your screen dimmer is turned of :D
 
 # That's all, have fun :D
