@@ -22,7 +22,8 @@ void loop()
   //if available, refresh command buffers
   if (Serial.available() > 0)
   {
-    String received = getBluetooth();
+    String received = Serial.readString();
+    Serial.print(received);
     
     if (received[0] == '1') 
     { 
@@ -39,12 +40,12 @@ void loop()
   //Apply command buffer to steppers 
   for(int i=0; i<2; i++)
   {
-    if (commandStepper[i] == "up")
+    if (commandStepper[i] == "cw")
     {
       stepper[i].setSpeed(1000.0);
       stepper[i].runSpeed();
     }
-    else if (commandStepper[i] == "down")
+    else if (commandStepper[i] == "ccw")
     {
       stepper[i].setSpeed(-1000.0);
       stepper[i].runSpeed();
@@ -55,16 +56,3 @@ void loop()
     }
   }
 }
-
-// Returns a optimized string of the HC-06 Bluetooth device
-String getBluetooth()
-{
-  String data;
-
-  data = Serial.readString();
-  data.remove(0, 10);
-  data.remove(data.length() - 1, 1);
-
-  return data;
-}
-
