@@ -20,5 +20,3 @@ Arduino Bluetooth model crane control
 - Open the APK and the installation starts
 
 In case you can't hit the install button - make sure that your screen dimmer is turned of :D
-
-# That's all, have fun :D
