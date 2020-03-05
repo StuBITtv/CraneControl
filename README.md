@@ -8,6 +8,9 @@ Arduino Bluetooth model crane control
 - 2x ULN2003 motor drivers
 - and of cours, an Android smartphone and a computer
 
+# A note on the motors
+I would highly recommend you to not use stepper motors due to their weak nature. Just use some cheap more powerful DC motors instead. You can still use the code for the Arduino as skeleton.  
+
 # Setup the Arduino
 - Connect the stepper motors to the motor drivers
 - Connect the moto drivers to the pins 5-8  and 9-12 at your Arduino
